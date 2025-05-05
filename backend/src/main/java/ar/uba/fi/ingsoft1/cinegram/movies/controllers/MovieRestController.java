@@ -29,7 +29,7 @@ public class MovieRestController {
         this.movieService = movieService;
     }
 
-    @GetMapping(produces = "application/json")
+    @GetMapping(value = "/search",produces = "application/json")
     @Operation(summary = "Get a list of movies")
     @ResponseStatus(HttpStatus.OK)
     Page<MovieDTO> getMovies(

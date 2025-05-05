@@ -1,4 +1,4 @@
-package ar.uba.fi.ingsoft1.todo_template.config;
+package ar.uba.fi.ingsoft1.cinegram.config;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
@@ -13,10 +13,10 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.HashSet;
 
-import static ar.uba.fi.ingsoft1.todo_template.config.security.SecurityConfig.PUBLIC_ENDPOINTS;
+import static ar.uba.fi.ingsoft1.cinegram.config.security.SecurityConfig.PUBLIC_ENDPOINTS;
 
 @OpenAPIDefinition(
-        info = @Info(title = "Simple To-Do App Backend")
+        info = @Info(title = "App Movies")
 )
 @SecurityScheme(
         name = OpenApiConfiguration.BEARER_AUTH_SCHEME_KEY,
@@ -34,7 +34,6 @@ public class OpenApiConfiguration {
         return openApi -> {
             var tags = new HashSet<String>();
 
-            // Iterate over what spring calls controllers (OpenAPI paths) and paths (OpenAPI operations)
             for (var entry: openApi.getPaths().entrySet()) {
                 for (var operation: entry.getValue().readOperations()) {
                     tags.addAll(operation.getTags());

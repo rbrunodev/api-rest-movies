@@ -1,5 +1,6 @@
-package ar.uba.fi.ingsoft1.todo_template.config.security;
+package ar.uba.fi.ingsoft1.cinegram.config.security;
 
+import ar.uba.fi.ingsoft1.cinegram.config.security.JwtAuthFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,8 +21,11 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity(debug = false)
 public class SecurityConfig {
-
-    public static final String[] PUBLIC_ENDPOINTS = {"/users", "/sessions"};
+    public static final String[] PUBLIC_ENDPOINTS = {
+        "/users",
+        "/sessions",
+        "/movies/search",
+    };
 
     private final JwtAuthFilter authFilter;
 

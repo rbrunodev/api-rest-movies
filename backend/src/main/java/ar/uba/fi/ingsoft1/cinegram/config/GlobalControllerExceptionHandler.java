@@ -1,4 +1,4 @@
-package ar.uba.fi.ingsoft1.todo_template.config;
+package ar.uba.fi.ingsoft1.cinegram.config;
 
 import ar.uba.fi.ingsoft1.todo_template.common.exception.ItemNotFoundException;
 import io.swagger.v3.oas.annotations.media.Content;
