@@ -6,9 +6,10 @@ import ar.uba.fi.ingsoft1.cinegram.user.dto.UserCreateDTO;
 import ar.uba.fi.ingsoft1.cinegram.user.interfaces.UserCredentials;
 import ar.uba.fi.ingsoft1.cinegram.user.interfaces.UserRepository;
 import ar.uba.fi.ingsoft1.cinegram.user.models.User;
-import ar.uba.fi.ingsoft1.todo_template.config.security.JwtService;
-import ar.uba.fi.ingsoft1.todo_template.user.refresh_token.RefreshToken;
-import ar.uba.fi.ingsoft1.todo_template.user.refresh_token.RefreshTokenService;
+import ar.uba.fi.ingsoft1.cinegram.config.security.JwtService;
+import ar.uba.fi.ingsoft1.cinegram.config.security.JwtUserDetails;
+import ar.uba.fi.ingsoft1.cinegram.user.refresh_token.RefreshToken;
+import ar.uba.fi.ingsoft1.cinegram.user.refresh_token.RefreshTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,7 +23,6 @@ import java.util.Optional;
 @Service
 @Transactional
 public class UserService implements UserDetailsService {
-
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
@@ -51,14 +51,14 @@ public class UserService implements UserDetailsService {
                 });
     }
 
-    public Optional<TokenDTO> createUser(UserCreateDTO data) {
+    public Optional<TokenDTO> singUp(UserCreateDTO data) {
         if (userRepository.findByUsername(data.username()).isPresent()) {
-            return loginUser(data);
-        } else {
-            var user = data.asUser(passwordEncoder::encode);
-            userRepository.save(user);
-            return Optional.of(generateTokens(user));
+            return Optional.empty();
         }
+
+        var user = data.asUser(passwordEncoder::encode);
+        userRepository.save(user);
+        return Optional.of(generateTokens(user));
     }
 
     public Optional<TokenDTO> loginUser(UserCredentials data) {

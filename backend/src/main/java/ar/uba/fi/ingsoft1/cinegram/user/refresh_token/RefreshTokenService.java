@@ -1,7 +1,6 @@
 package ar.uba.fi.ingsoft1.cinegram.user.refresh_token;
 
-import ar.uba.fi.ingsoft1.cinegram.user.refresh_token.RefreshTokenRepository;
-import ar.uba.fi.ingsoft1.todo_template.user.User;
+import ar.uba.fi.ingsoft1.cinegram.user.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

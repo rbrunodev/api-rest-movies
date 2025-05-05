@@ -1,14 +1,11 @@
 package ar.uba.fi.ingsoft1.cinegram.movies.models;
 
 import ar.uba.fi.ingsoft1.cinegram.actors.models.Actor;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import ar.uba.fi.ingsoft1.cinegram.categories.models.Category;
+import jakarta.persistence.*;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Movie {
@@ -23,16 +20,30 @@ public class Movie {
     @Column
     private String description;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "project")
-    private List<Actor> tasks;
+    @ManyToMany
+    @JoinTable(
+            name = "movie_actor",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "actor_id")
+    )
+    private Set<Actor> actors = new HashSet<>();
 
-    Movie() {}
+    @ManyToMany
+    @JoinTable(
+            name = "movie_category",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    private Set<Category> categories = new HashSet<>();
 
-    public Movie(Long id, String name, String description) {
+    public Movie(Long id, String name, String description, Set<Category> categories) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.categories = categories;
     }
+
+    public Movie() {}
 
     public Long getId() {
         return id;
@@ -44,5 +55,29 @@ public class Movie {
 
     public String getDescription() {
         return description;
+    }
+
+    public void setActors(Set<Actor> actors) {
+        this.actors = actors;
+    }
+
+    public void setCategories(Set<Category> categories){
+        this.categories = categories;
+    }
+
+    public Set<Actor> getActors() {
+        return actors;
+    }
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

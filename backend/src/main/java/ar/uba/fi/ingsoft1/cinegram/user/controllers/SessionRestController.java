@@ -25,7 +25,6 @@ import org.springframework.web.server.ResponseStatusException;
 @RequestMapping("/sessions")
 @Tag(name = "2 - Sessions")
 class SessionRestController {
-
     private final UserService userService;
 
     @Autowired

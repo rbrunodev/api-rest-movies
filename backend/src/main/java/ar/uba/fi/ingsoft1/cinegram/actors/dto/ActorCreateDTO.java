@@ -7,22 +7,32 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.LongFunction;
 
 public record ActorCreateDTO(
         @NotBlank @Size(min = 1, max = 100) String title,
         @Size(min = 1, max = 100) String description,
-        @Positive Long projectId
+        List<Long> moviesId
 ) {
-    public Actor asActor(LongFunction<Optional<Movie>> getProject) throws ItemNotFoundException {
-        return this.asActor(null, getProject);
+    public Actor asActor(LongFunction<Optional<Movie>> movieFetcher) throws ItemNotFoundException {
+        return this.asActor(null, movieFetcher);
     }
 
-    public Actor asActor(Long id, LongFunction<Optional<Movie>> getProject) throws ItemNotFoundException {
-        var project = projectId == null
-                ? null
-                : getProject.apply(projectId).orElseThrow(() -> new ItemNotFoundException("project", projectId));
-        return new Actor(id, title, description, project);
+    public Actor asActor(Long id, LongFunction<Optional<Movie>> movieFetcher) throws ItemNotFoundException {
+        Set<Movie> movies = new HashSet<>();
+
+        if (moviesId != null) {
+            for (Long movieId : moviesId) {
+                Movie movie = movieFetcher.apply(movieId)
+                        .orElseThrow(() -> new ItemNotFoundException("movie", movieId));
+                movies.add(movie);
+            }
+        }
+
+        return new Actor(id, title, description, movies);
     }
 }

@@ -1,11 +1,10 @@
 package ar.uba.fi.ingsoft1.cinegram.actors.models;
 
 import ar.uba.fi.ingsoft1.cinegram.movies.models.Movie;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Actor {
@@ -20,14 +19,14 @@ public class Actor {
     @Column
     private String description;
 
-    @ManyToOne
-    private Movie movie;
+    @ManyToMany(mappedBy = "actors")
+    private Set<Movie> movies = new HashSet<>();
 
-    public Actor(Long id, String title, String description, Movie movie) {
+    public Actor(Long id, String title, String description, Set<Movie> movies) {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.movie = movie;
+        this.movies = movies != null ? movies : new HashSet<>();
     }
 
     public Actor() {}
@@ -44,7 +43,11 @@ public class Actor {
         return description;
     }
 
-    public Movie getProject() {
-        return movie;
+    public Set<Movie> getMovies() {
+        return movies;
+    }
+
+    public void setMovies(Set<Movie> movies) {
+        this.movies = movies;
     }
 }

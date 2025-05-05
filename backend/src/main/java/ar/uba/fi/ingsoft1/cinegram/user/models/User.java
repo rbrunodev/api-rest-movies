@@ -7,45 +7,41 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 public class User implements CredencialesDeUsuario {
-//                   implements CredencialesDeUsuario,UserDetails{
     @Id
     @GeneratedValue
-    private Long idUsuario;
+    private Long id;
 
     @Column(unique = true, nullable = false)
     private String email;
 
     @Column(nullable = false)
-    private String apellido;
+    private String lastName;
     @Column(nullable = false)
-    private String nombre;
+    private String name;
     @Column(nullable = false)
-    private String fechaDeNacimiento;
+    private String birthdate;
     @Column(nullable = false)
-    private String genero;
+    private String gender;
 
     @Column(nullable = false)
-    private String fotoDePerfil;
-//Dudo que sea un string pero supongamos que es el link
-
-
+    private String avatar;
 
     @Column(nullable = false)
-    private String contrasenia;
+    private String password;
 
     @Column(nullable = false)
     private String role;
 
     public User() {}
 
-    public User(String email, String contrasenia, String nombre, String apellido, String fechaDeNacimiento, String genero, String fotoDePerfil) {
+    public User(String email, String password, String name, String lastName, String birthdate, String gender, String avatar) {
         this.email = email;
-        this.apellido = apellido;
-        this.fechaDeNacimiento = fechaDeNacimiento;
-        this.genero = genero;
-        this.fotoDePerfil = fotoDePerfil;
-        this.nombre = nombre;
-        this.contrasenia = contrasenia;
+        this.lastName = lastName;
+        this.birthdate = birthdate;
+        this.gender = gender;
+        this.avatar = avatar;
+        this.name = name;
+        this.password = password;
         this.role = "USER";
     }
 
@@ -55,30 +51,27 @@ public class User implements CredencialesDeUsuario {
 
 
     @Override
-    public String nombre() {
-        return this.nombre;
+    public String name() {
+        return this.name;
     }
 
     @Override
-    public String contrasenia() {
-        return this.contrasenia;
+    public String password() {
+        return this.password;
     }
 
-
-    public String getNombre() {
-        return this.nombre;
+    public String getName() {
+        return this.name;
     }
 
-    public String getContrasenia() {
-        return this.contrasenia;
+    public String getPassword() {
+        return this.password;
     }
 
     public String getRole() {
         return role;
     }
 
-//    @Override
-//    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        return List.of(new SimpleGrantedAuthority(role));
-//    }
+    public String getUsername() {return email;}
+
 }

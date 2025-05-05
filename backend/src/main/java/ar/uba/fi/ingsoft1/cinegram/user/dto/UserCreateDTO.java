@@ -9,21 +9,21 @@ import java.util.function.Function;
 public record UserCreateDTO(
         @NotBlank String email,
         @NotBlank String password,
-        @NotBlank String nombre,
-        @NotBlank String apellido,
-        @NotBlank String fechaDeNacimiento,
-        @NotBlank String genero,
-        @NotBlank String fotoDePerfil
+        @NotBlank String name,
+        @NotBlank String lastName,
+        @NotBlank String birthdate,
+        @NotBlank String gender,
+        @NotBlank String avatar
 ) implements UserCredentials {
     public User asUser(Function<String, String> encryptPassword) {
         return new User(
                 email,
                 encryptPassword.apply(password),
-                nombre,
-                apellido,
-                fechaDeNacimiento,
-                genero,
-                fotoDePerfil
+                name,
+                lastName,
+                birthdate,
+                gender,
+                avatar
         );
     }
 

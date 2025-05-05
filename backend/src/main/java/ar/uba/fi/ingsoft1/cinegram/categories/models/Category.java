@@ -1,9 +1,12 @@
 package ar.uba.fi.ingsoft1.cinegram.categories.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import ar.uba.fi.ingsoft1.cinegram.movies.models.Movie;
+import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
 public class Category {
     @Id
     @GeneratedValue
@@ -15,13 +18,16 @@ public class Category {
     @Column
     private String description;
 
-    Category() {}
+    @ManyToMany(mappedBy = "categories")
+    private Set<Movie> movies = new HashSet<>();
 
     public Category(Long id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;
     }
+
+    public Category() {}
 
     public Long getId() {
         return id;
@@ -33,5 +39,13 @@ public class Category {
 
     public String getDescription() {
         return description;
+    }
+
+    public Set<Movie> getMovies() {
+        return movies;
+    }
+
+    public void setMovies(Set<Movie> movies) {
+        this.movies = movies;
     }
 }
