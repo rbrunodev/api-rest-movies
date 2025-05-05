@@ -3,9 +3,12 @@ package ar.uba.fi.ingsoft1.cinegram.movies.services;
 import ar.uba.fi.ingsoft1.cinegram.movies.interfaces.MovieRepository;
 import ar.uba.fi.ingsoft1.cinegram.movies.dto.MovieCreateDTO;
 import ar.uba.fi.ingsoft1.cinegram.movies.dto.MovieDTO;
+import ar.uba.fi.ingsoft1.cinegram.movies.models.FilterMovie;
+import ar.uba.fi.ingsoft1.cinegram.movies.models.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,8 +25,12 @@ public class MovieService {
         this.movieRepository = movieRepository;
     }
 
-    public Page<MovieDTO> getMovies(Pageable pageable) {
-        return movieRepository.findAll(pageable).map(MovieDTO::new);
+    public Page<MovieDTO> getMovies(Pageable pageable, String title, long actorId, long categoryId) {
+        Specification<Movie> filters;
+        filters = Specification.where(FilterMovie.byTitle(title))
+                .and(FilterMovie.byActor(actorId))
+                .and(FilterMovie.byCategory(categoryId));
+        return movieRepository.findAll(filters, pageable).map(MovieDTO::new);
     }
 
     public Optional<MovieDTO> getMovie(long id) {
