@@ -1,4 +1,4 @@
-package ar.uba.fi.ingsoft1.todo_template.config.security;
+package ar.uba.fi.ingsoft1.cinegram.config.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -51,7 +51,7 @@ public class JwtService {
                 return Optional.of(new JwtUserDetails(claims.getSubject(), role));
             }
         } catch (Exception e) {
-            // Some exception happened during jwt parse
+            //
         }
         return Optional.empty();
     }

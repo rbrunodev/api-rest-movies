@@ -1,4 +1,4 @@
-package ar.uba.fi.ingsoft1.todo_template.config.security;
+package ar.uba.fi.ingsoft1.cinegram.config.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -37,12 +37,10 @@ class JwtAuthFilter extends OncePerRequestFilter {
     }
 
     private void authenticateToken(HttpServletRequest request) {
-        // Is the user already authenticated?
         if (SecurityContextHolder.getContext().getAuthentication() != null) {
             return;
         }
 
-        // Try to get the token
         String authHeader = request.getHeader("Authorization");
         String headerPrefix = "Bearer ";
         if (authHeader == null || !authHeader.startsWith(headerPrefix)) {
