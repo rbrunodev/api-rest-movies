@@ -16,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -59,6 +60,7 @@ class ActorRestController {
 
     @PostMapping(produces = "application/json")
     @Operation(summary = "Create a new actor")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     ActorDTO createActor(
             @Valid @RequestBody ActorCreateDTO actorCreate
@@ -68,6 +70,7 @@ class ActorRestController {
 
     @PutMapping(value = "/{id}", produces = "application/json")
     @Operation(summary = "Update a actor")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     @ApiResponse(responseCode = "404", description = "Actor not found", content = @Content)
     ResponseEntity<ActorDTO> putActor(
@@ -79,6 +82,7 @@ class ActorRestController {
 
     @DeleteMapping(value = "/{id}")
     @Operation(summary = "Delete a actor")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void deleteActor(
             @Valid @PathVariable @Positive long id

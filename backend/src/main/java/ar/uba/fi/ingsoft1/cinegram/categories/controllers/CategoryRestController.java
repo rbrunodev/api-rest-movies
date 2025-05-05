@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,6 +41,7 @@ public class CategoryRestController {
 
     @PostMapping(produces = "application/json")
     @Operation(summary = "Create a new category")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     CategoryDTO create(
             @Valid @RequestBody CategoryCreateDTO categoryCreate
@@ -59,6 +61,7 @@ public class CategoryRestController {
 
     @PutMapping(value = "/{id}", produces = "application/json")
     @Operation(summary = "Update a category")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     @ApiResponse(responseCode = "404", description = "Category not found", content = @Content)
     ResponseEntity<CategoryDTO> put(
@@ -70,6 +73,7 @@ public class CategoryRestController {
 
     @DeleteMapping(value = "/{id}")
     @Operation(summary = "Delete a category")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void delete(
             @Valid @PathVariable @Positive long id
